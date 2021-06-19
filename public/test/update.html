@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+</head>
+<body>
+<div>
+    <button onclick="update()">提交</button>
+    <div id="content"></div>
+</div>
+<script>
+    const params = {
+        collection:'CP_author_zhou',
+        id : "6006918bc32cdc043e6fb85d",
+        update:{
+            "nameTr" : "houyyy",
+            "desc" : "test",
+        },
+    }
+    function update(){
+        axios.post('http://localhost:3000/api/update',params).then(res=>{
+            console.log('res:',res)
+        }).catch(err=>{
+            console.log('catch:',err)
+        })
+        // console.log('gggg')
+    }
+</script>
+</body>
+</html>

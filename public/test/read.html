@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./js/sql-asm.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"
+            integrity="sha512-Qlv6VSKh1gDKGoJbnyA5RMXYcvnpIqhO++MhIM2fStMcGT9i2T//tSwYFlcyoRRDcDZ+TYHpH8azBBCyhpSeqw=="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<input type='file' id='dbfile'>
+
+<script>
+
+// 0: {name: "cilinzhengyun"}
+// 1: {name: "cipai"}
+// 2: {name: "color"}
+// 3: {name: "example"}
+// 4: {name: "home_quote"}
+// 5: {name: "pingshuiyun"}
+// 6: {name: "zhonghuaxinyun"}
+
+    initSqlJs({ locateFile: filename => `./dist/${filename}` }).then(function (SQL) {
+        var dbFileElm = document.getElementById('dbfile');
+        var table=[]
+        dbFileElm.onchange = () => {
+            var f = dbFileElm.files[0];
+            var r = new FileReader();
+            r.onload = function () {
+                var Uints = new Uint8Array(r.result);
+                db = new SQL.Database(Uints);
+                var stmt = db.prepare(`SELECT * from "zhonghuaxinyun"`);
+                stmt.getAsObject({}); // {col1:1, col2:111}
+                stmt.bind({});
+                while (stmt.step()) { //
+                    var row = stmt.getAsObject();
+                    table.push(row);
+
+                }
+                var bold =new Blob([JSON.stringify({ blob: [...table] })],{ type: 'application/json' })
+                saveAs(bold, 'zhonghuaxinyun.json')
+                console.log(table,bold)
+                table=[]
+            }
+            r.readAsArrayBuffer(f);
+        }
+    })
+</script>
+</body>
+</html>

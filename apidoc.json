@@ -1,0 +1,7 @@
+{
+    "name": "ChinesePoetryApi",
+    "description": "中国古诗词Api",
+    "title": "中国古诗词",
+    "url": "http://localhost:3000/api",
+    "sampleUrl":"http://localhost:3000/api"
+}
